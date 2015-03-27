@@ -47,7 +47,7 @@ __global__ void life_kernel(int * source_domain, int * dest_domain, int domain_x
 	// Compute new value
 	int res = 0;
 
-	if (nb_blue + nb_red == 2 || nb_blue + nb_red == 3)
+	if (myself != 0 && (nb_blue + nb_red == 2 || nb_blue + nb_red == 3))
 		res = myself;
 	else if (myself == 0 && nb_blue + nb_red == 3) {
 		if (nb_blue > nb_red)

@@ -12,7 +12,7 @@ int main(int argc, char ** argv)
     
     int cells_per_word = 1;
     
-    int steps = 1;
+    int steps = 2;
     
     int threads_per_block = 128;
     int blocks_x = domain_x / (threads_per_block * cells_per_word);
