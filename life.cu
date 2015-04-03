@@ -12,14 +12,17 @@ int main(int argc, char ** argv)
     
     int cells_per_word = 1;
     
-    int steps = 2;
+    int steps = 1;
     
     int threads_per_block = 128;
-    int blocks_x = domain_x / (threads_per_block * cells_per_word);
-    int blocks_y = domain_y;
+    //int blocks_x = domain_x / (threads_per_block * cells_per_word);
+    //int blocks_y = domain_y;
+	int blocks_x = 8;
+    int blocks_y = 16 ;
     
     dim3  grid(blocks_x, blocks_y);	// CUDA grid dimensions
-    dim3  threads(threads_per_block);	// CUDA block dimensions
+    dim3 gridinit(128, 128);
+	dim3  threads(16,8);	// CUDA block dimensions
 
     // Allocation of arrays
     int * domain_gpu[2] = {NULL, NULL};
@@ -29,7 +32,7 @@ int main(int argc, char ** argv)
 	CUDA_SAFE_CALL(cudaMalloc((void**)&domain_gpu[0], domain_size));
     CUDA_SAFE_CALL(cudaMalloc((void**)&domain_gpu[1], domain_size));
 
-	init_kernel<<< grid, threads, 0 >>>(domain_gpu[0], domain_x);
+	init_kernel<<< gridinit, threads, 0 >>>(domain_gpu[0], domain_x);
 
     // Timer initialization
     cudaEvent_t start, stop;
