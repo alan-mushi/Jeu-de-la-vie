@@ -15,14 +15,12 @@ int main(int argc, char ** argv)
     int steps = 1;
     
     int threads_per_block = 128;
-    //int blocks_x = domain_x / (threads_per_block * cells_per_word);
-    //int blocks_y = domain_y;
 	int blocks_x = 8;
     int blocks_y = 16 ;
     
     dim3  grid(blocks_x, blocks_y);	// CUDA grid dimensions
     dim3 gridinit(128, 128);
-	dim3  threads(16,8);	// CUDA block dimensions
+	dim3  threads(1,8);	// CUDA block dimensions
 
     // Allocation of arrays
     int * domain_gpu[2] = {NULL, NULL};
@@ -66,7 +64,6 @@ int main(int argc, char ** argv)
 
     CUDA_SAFE_CALL(cudaFree(domain_gpu[0]));
     CUDA_SAFE_CALL(cudaFree(domain_gpu[1]));
-    
 
     // Count colors
     int red = 0;
